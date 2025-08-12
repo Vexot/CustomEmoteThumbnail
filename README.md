@@ -6,7 +6,7 @@ Tired of Roblox's automatic emote thumbnails? This plugin gives you full control
 ## 📦 Installation
 This plugin was made source-available due to Roblox Creator Store requirements (which block the use of `InsertService`).  
 To install manually:
-1. Download the **latest release** from this repository.
+1. Download the [**latest release**](https://github.com/Vexot/CustomEmoteThumbnail/releases) from this repository.
 2. Place the file in your **Roblox Studio Local Plugins** folder.
 
 ## ✨ Features
