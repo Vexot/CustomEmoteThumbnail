@@ -25,7 +25,7 @@ function Versioning.checkForUpdate(endpoint: string?): boolean
     local latestVersion = data.tag_name
     if not latestVersion or type(latestVersion) ~= "string" then return false end
 
-    return currentVersion ~= latestVersion
+    return `v{currentVersion}` ~= latestVersion
 end
 
 function Versioning.getCurrentVersion(): string?
