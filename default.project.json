@@ -1,0 +1,23 @@
+{
+    "name": "Custom Emote Thumbnail",
+    "tree": {
+        "$className": "DataModel",
+
+        "ServerStorage": {
+            "$className": "ServerStorage",
+
+            "CET_PLUGIN": {
+                "$path": "plugin",
+
+                "Packages": {
+                    "$className": "Folder",
+                    "$path": "FixPackages",
+
+                    "Wally": {
+                        "$path": "Packages"
+                    }
+                }
+            }
+        }
+    }
+}

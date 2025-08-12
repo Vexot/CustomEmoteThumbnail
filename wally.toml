@@ -1,0 +1,10 @@
+[package]
+name = "vexot/custom-emote-thumbnail"
+description = ""
+version = "0.1.0"
+registry = "https://github.com/upliftgames/wally-index"
+realm = "shared"
+
+[dependencies]
+Ignite = "cameronpcampbell/ignite@1.2.5"
+Fusion = "elttob/fusion@0.3.0"
