@@ -2,7 +2,7 @@
 return table.freeze {
     LongName = 'Custom Emote Thumbnail',
     ShortName = 'CET',
-    Version = '0.1.0',
+    Version = '0.1.1',
 
     CameraFOV = 20,
     MannequinOutfitId = 1342485078, -- Bundle: 515
