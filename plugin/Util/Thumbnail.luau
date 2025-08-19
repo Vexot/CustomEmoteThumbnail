@@ -13,7 +13,7 @@ local InsertService = game:GetService("InsertService")
 
 local FStringEmoteUtilityFallbackKeyframeSequenceAssetId = "10921261056"
 local FFlagAnimationSilhouetteCurveAnimations = false
-local FFlagFixKeyframeGeneration = false
+local FFlagFixKeyframeGeneration = true
 
 local module = {}
 
