@@ -9,6 +9,10 @@ To install manually:
 1. Download the [**latest release**](https://github.com/Vexot/CustomEmoteThumbnail/releases) from this repository.
 2. Place the file in your **Roblox Studio Local Plugins** folder.
 
+<video src="https://github.com/user-attachments/assets/69fe8524-c9f3-4ad2-888a-07cbaba0aa1b">
+  Your browser does not support the video tag.
+</video>
+
 ## ✨ Features
 - **Full customization** – tweak every available parameter.
 - **Two modes** –  
