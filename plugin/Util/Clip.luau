@@ -23,6 +23,7 @@ local timeSliderStepInterval: Fusion.Value<number>? = nil
 
 local pluginVisible: Fusion.Value<boolean>? = nil
 local selConnection: RBXScriptConnection?
+local changeConnection: RBXScriptConnection?
 
 function Clip.updateSliderValues(clip: Types.Clip)
     if not (timeSliderMin and timeSliderMax and timeSliderStepInterval and isCurve) then return end
@@ -100,6 +101,11 @@ function Clip.applyIfExistent(anim: Animation)
     end
 end
 
+function Clip.listenForChange(sel: Animation?)
+    if changeConnection then changeConnection = changeConnection:Disconnect() end
+    changeConnection = sel and sel:GetPropertyChangedSignal("AnimationId"):Connect(Clip.checkSelection)
+end
+
 function Clip.checkSelection()
     if not selectedClip then return end
     
@@ -117,13 +123,17 @@ function Clip.checkSelection()
                 Clip.updateSliderValues(fetched)
                 States.resetAll()
 
-                if fetched then Clip.applyIfExistent(selectedInstance) end
+                if fetched then
+                    Clip.applyIfExistent(selectedInstance)
+                    Clip.listenForChange(selectedInstance)
+                end
                 return
             end
         end
     end
     
     selectedClip:set(nil)
+    Clip.listenForChange(nil)
     Clip.updateSliderValues(nil)
 end
 
@@ -131,8 +141,9 @@ function Clip.handleVisibility()
     if not pluginVisible then return end
 
     if Fusion.peek(pluginVisible) then
-        if selConnection then return end
-        selConnection = Selection.SelectionChanged:Connect(Clip.checkSelection)
+        if not selConnection then
+            selConnection = Selection.SelectionChanged:Connect(Clip.checkSelection)
+        end
         Clip.checkSelection()
     else
         selConnection = selConnection and selConnection:Disconnect() or nil
@@ -151,8 +162,8 @@ function Clip.init(scope: Fusion.Scope<Fusion.Fusion & Ignite.Ignite>, widgetEna
     timeSliderStepInterval = scope:Value(GeneralData.CurveIncrement)
 
     table.insert(scope, function()
-        if not selConnection then return end
-        selConnection = selConnection:Disconnect()
+        selConnection = selConnection and selConnection:Disconnect()
+        changeConnection = changeConnection and changeConnection:Disconnect()
     end)
 
     scope:Observer(widgetEnabled):onChange(function()
