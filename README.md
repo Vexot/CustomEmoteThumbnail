@@ -1,3 +1,7 @@
+> 
+> **This repository is sponsored and mantained by [Smiling Axolotl](https://smilingaxolotl.com/).**
+> 
+
 # Emote Custom Thumbnail
 Tired of Roblox's automatic emote thumbnails? This plugin gives you full control over every parameter Roblox allows. Switch between a quick, simplified view or dive into advanced mode for pixel-perfect results.
 
