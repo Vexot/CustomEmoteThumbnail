@@ -1,5 +1,5 @@
 --!strict
-local Players = game:GetService('Players')
+local InsertService = game:GetService 'InsertService'
 
 local MainPath = script.Parent.Parent
 local Fusion = require(MainPath.Packages.Fusion)
@@ -11,45 +11,39 @@ local Types = require(MainPath.Types)
 local Clip = require(script.Parent.Clip)
 local States = require(script.Parent.States)
 
+local Template = script:WaitForChild 'Mannequin'
+
 local Character = {}
 
 local viewportCharacter: Model? = nil
 local viewportInstance: any = nil
 
 function Character.createCharacter(desiredColor: Color3?): Model?
-    local defaultColor = desiredColor or Color3.new(1,1,1)--Color3.fromRGB(162, 162, 162)
+    local defaultColor = desiredColor or Color3.new(1, 1, 1)
+    local character = Template:Clone()
     
-    local success, humDesc = pcall(function()
-        return Players:GetHumanoidDescriptionFromOutfitId(GeneralData.MannequinOutfitId)
-    end)
-    
-    if not success then
-        warn(`[{GeneralData.ShortName} - Plugin]: Failed to fetch Roblox's animation rig. Using fallback rig.`)
-        if humDesc and humDesc:IsA('HumanoidDescription') then humDesc:Destroy() end
-        humDesc = Instance.new('HumanoidDescription')
+    for _, remove in character:QueryDescendants('Accessory,SurfaceAppearance,Decal,Texture') do
+        remove:Destroy()
     end
-    
-    local character = Players:CreateHumanoidModelFromDescription(humDesc, Enum.HumanoidRigType.R15)
-    
-    for _, descendant in pairs(character:GetDescendants()) do
-        if descendant:IsA("BasePart") and descendant.Parent == character then
-            for _, child in pairs(descendant:GetChildren()) do
-                if child:IsA("SurfaceAppearance") or child:IsA("Decal") or child:IsA("Texture") then
-                    child:Destroy()
-                end
+
+    for _, part in character:QueryDescendants('BasePart') do
+        if part:IsA("MeshPart") then
+            local fixedId = GeneralData.FixMeshIds[part.Name] :: string?
+            if fixedId then
+                local mesh = InsertService:CreateMeshPartAsync(
+                    fixedId, Enum.CollisionFidelity.Default,
+                    Enum.RenderFidelity.Precise
+                )
+
+                part:ApplyMesh(mesh)
             end
-            
-            if descendant:IsA("MeshPart") then
-                descendant.TextureID = ''
-            end
-            
-            descendant.Color = defaultColor
-        elseif descendant:IsA("Accessory") then
-            descendant:Destroy()
+
+            part.TextureID = ''
         end
+        
+        part.Color = defaultColor
     end
     
-    humDesc:Destroy()
     return character
 end
 

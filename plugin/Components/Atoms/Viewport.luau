@@ -52,7 +52,7 @@ return function(scope: Fusion.Scope<Fusion.Fusion & Ignite.Ignite>, props: Props
                 CurrentCamera = props.Camera,
                 BackgroundTransparency = 1,
 
-			    ImageColor3 = Color3.new(160, 160, 160),
+			    ImageColor3 = Color3.fromRGB(160, 160, 160),
                 Ambient = Color3.new(1,1,1),
                 LightColor = Color3.new(),
 
